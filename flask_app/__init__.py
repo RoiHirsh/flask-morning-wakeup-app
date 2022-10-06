@@ -23,7 +23,5 @@ def create_app(config_file='settings.py'):
     app.register_blueprint(main)
     app.register_blueprint(auth)
     app.cli.add_command(create_tables)
-    #test:
-    create_tables()
 
     return app
