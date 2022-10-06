@@ -20,4 +20,5 @@ __pycache__/
 .env
 .flaskenv
 db.sqlite3
+wsgi.py
 # End of https://www.toptal.com/developers/gitignore/api/virtualenv
