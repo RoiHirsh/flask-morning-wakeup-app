@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Heebo">
+    <title>בוקר טוב</title>
+</head>
+<body>
+    <div class="row" id="main_container">
+        {% block content %}
+        <div class="column column_main">
+            <div class="row" id="dashboard_info">
+                <div class="column column_dashboard">
+                    <h3 id="day">יום</h3>
+                    <p id="date" style="font-size: 0.8em;">תאריך</p>
+                </div>
+                <div class="column column_dashboard" style="text-align: end">
+                    <p><span id="time"></span></p>
+                    <span>&#8451;</span><span id="temperature"></span>
+                </div>
+            </div>
+            <br>
+            <div class="row" id="messages_box">
+                <p>
+                    {{ introMessage }}
+                </p>
+                <br>
+                <br>
+                <div class="row">
+                    <button class="option" id="play_music" onclick="playMusic()">הפעל מוזיקה</button>
+                    <button id="awake_messagesBox" onclick="runAjax(this.id)">ליחצי כאן אם התעוררת</button>
+                </div>
+                <br>
+            </div>
+        </div>
+        <div class="column column_main" id="left_column" style="visibility: collapse;">
+            <div id="playground">
+            
+            </div>
+        </div>
+    </div>
+    <!--Placing HTML templates here:-->
+    
+    <template id="awake">
+        <div class="row">
+            <p id="insert_text"></p>
+        </div>
+        <div class="row" style="display: flex;">
+            <div class="column" style="width: 40%; display: flex; flex-direction: column;">
+                <button class="option" id="dadMessage_playground" onclick="runAjax(this.id)">הודעה מאבא</button>
+                <button class="option" id="morningSong_playground" onclick="runAjax(this.id)">שיר בוקר</button>
+            </div>
+            <div class="column" style="width: 40%; display: flex; flex-direction: column;">
+                <button class="option" id="momMessage_playground" onclick="runAjax(this.id)">הודעה מאמא</button>
+                <button class="option" id="whatToDo_playground" onclick="runAjax(this.id)">לו"ז יומי</button>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <button class="button" id="ready_messagesBox" onclick="runAjax(this.id)">אני מוכנה להתחיל את היום</button>
+        </div>
+        <br>
+    </template>
+    
+    <template id="dadMessage">
+        <div class="row">
+            <br>
+            <br>
+            <br>
+            <p id="insert_text"></p>
+        </div>
+    </template>
+    
+    <template id="momMessage">
+        <div class="row">
+            <br>
+            <br>
+            <br>
+            <p id="insert_text"></p>
+        </div>
+    </template>
+
+    <template id="morningSong">
+        <div class="row" style="align-items: center;">
+            <br>
+            <br>
+            <br>
+            <iframe id="insert_youtube" src="" 
+            width="80%" height="250px" 
+            object-fit="cover" object-position="bottom" 
+            frameborder="0">
+            </iframe>
+        </div>
+    </template>
+
+    <template id="whatToDo">
+        <div class="row">
+            <br>
+            <br>
+            <br>
+            <ul id="insert_text" style="text-align: right;">
+                
+                <br>
+            </ul>
+        </div>
+    </template>
+
+    <template id="ready">
+        <div class="row">
+            <p>בואי נתחיל את היום:</p>
+            <ul style="text-align: right;">
+                <li id="task_1">לקום</li>
+                <li id="task_2">שירותים ומקלחת</li>
+                <li id="task_3">להתלבש</li>
+                <li id="task_4">לארגן את התיק</li>
+                <li id="task_5">תסרוקת</li>
+            </ul>    
+        </div>
+        <br>
+        <div class="row">
+            <button class="button" id="startflow_playground" onclick="runAjax(this.id)">יאללה בואי נתחיל</button>
+        </div>
+        <br>
+    </template>
+
+    <template id="startflow">
+        <div class="row">
+            <br>
+            <br>
+            <br>
+            <p>הגיע הזמן לקום.
+                תתמתחי פעם אחרונה לבוקר הזה ותרדי מהמיטה.
+                
+                תצליחי להתעורר ולרדת מהמיטה תוך 2 דקות?
+
+                בהצלחה!
+            </p>
+            <p><span id="minutes">02</span>:<span id="seconds">00</span></p>
+            <button id="start_countdown" onclick="startTimer(this.id)">אני מוכנה</button>
+            <button id="next_button" style="display: none;" onclick="runAjax(this.id)"></button>
+            <p> </p> <!--just creating an extra line below the button-->
+        </div>
+    </template>
+
+    <template id="shower">
+        <div class="row">
+            <br>
+            <br>
+            <br>
+            <p>ועכשיו נתפנה לשירותים ונתקלח.
+
+                תצליחי לסיים הכל תוך 7 דקות?
+
+                בהצלחה!
+            </p>
+            <p><span id="minutes">07</span>:<span id="seconds">00</span></p>
+            <button id="start_countdown" onclick="startTimer(this.id)">אני מוכנה</button>
+            <button id="next_button" style="display: none;" onclick="runAjax(this.id)"></button>
+            <p> </p> <!--just creating an extra line below the button-->
+        </div>
+    </template>
+
+    <template id="get_dressed">
+        <div class="row">
+            <br>
+            <br>
+            <br>
+            <p>ועכשיו נתלבש ונצחצח שיניים!
+
+                תצליחי לסיים הכל תוך 4 דקות?
+
+                בהצלחה!
+            </p>
+            <p><span id="minutes">04</span>:<span id="seconds">00</span></p>
+            <button id="start_countdown" onclick="startTimer(this.id)">אני מוכנה</button>
+            <button id="next_button" style="display: none;" onclick="runAjax(this.id)"></button>
+            <p> </p> <!--just creating an extra line below the button-->
+        </div>
+    </template>
+
+    <template id="organise_bag">
+        <div class="row">
+            <br>
+            <br>
+            <br>
+            <p>ועכשיו נבדוק שיש לנו הכל בתיק להיום. תנסי לחשוב על כל מה שתצטרכי לבית הספר היום.
+
+                תצליחי לסיים הכל תוך 3 דקות?
+
+                בהצלחה!
+            </p>
+            <p><span id="minutes">03</span>:<span id="seconds">00</span></p>
+            <button id="start_countdown" onclick="startTimer(this.id)">אני מוכנה</button>
+            <button id="next_button" style="display: none;" onclick="runAjax(this.id)"></button>
+            <p> </p> <!--just creating an extra line below the button-->
+        </div>
+    </template>
+
+    <template id="hair">
+        <div class="row">
+            <br>
+            <br>
+            <br>
+            <p>יופי כמעט סיימנו הכל. לא לשכוח:
+                משקפיים! וגם שעון!
+                ועכשיו, זמן לתסרוקת...
+                שלא ישאר אף שוווונצ :)!
+                
+                תצליחי לסיים הכל תוך 10 דקות?                                                
+
+                בהצלחה!
+
+            </p>
+            <p><span id="minutes">10</span>:<span id="seconds">00</span></p>
+            <button id="start_countdown" onclick="startTimer(this.id)">אני מוכנה</button>
+            <button id="next_button" style="display: none;" onclick="runAjax(this.id)"></button>
+            <p> </p> <!--just creating an extra line below the button-->
+        </div>
+    </template>
+
+    <template id="done">
+        <div class="row">
+            <br>
+            <br>
+            <br>
+            <p>יופי, סיימת את כל מה שצריך להיום, כל הכבוד!
+                
+                נתראה כאן מחר…
+                
+                שיהיה לך יום מדהים!
+            </p>
+            <button onclick="closeApplication()">ביי ביי</button>
+        
+            <p> </p> <!--just creating an extra line below the button-->
+        </div>
+    </template>
+
+    <script src="/static/home.js"></script>
+    {% endblock %}
+</body>
+</html>

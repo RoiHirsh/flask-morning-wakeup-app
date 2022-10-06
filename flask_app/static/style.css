@@ -1,0 +1,102 @@
+html {
+    background: url(/static/bgImage.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+} 
+
+body {
+    margin: 0;
+    min-height: 100%;
+    direction: rtl;
+    font-family: "Heebo", sans-serif;
+    color: white;
+}
+
+.column_main {
+    float: left;
+    width: 50%;
+    border-radius: 5px;
+    background-color:#ffafcc8b;
+    padding: 0;
+    box-shadow: 25px 5px 25px rgba(128, 128, 128, 0.448);
+}
+
+.column_dashboard {
+    float: left;
+    width: 50%;
+    font-size: 3vh;
+    font-weight: lighter;
+    line-height: 0.1em;
+}
+
+#main_container {
+    margin: 5vw;
+    display: flex;
+    column-gap: 2vh;
+}
+
+#dashboard_info {
+    display: flex;
+    column-gap: 2vw;
+    background-color: #8a2be2;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 2vh;
+}
+
+#messages_box, #playground {
+    font-size: 4vh;
+    line-height: 4.5vh;
+    margin-top: 5vh;
+    padding-left: 5vw;
+    padding-right: 5vw;
+}
+
+#playground {
+    text-align: center;
+}
+
+button {
+    border: 2px solid #8A2BE2;
+    background-color: #8A2BE2;
+    color: white;
+    padding: 8px 16px;
+    font-family: "Heebo", sans-serif;
+    font-size: 2.5vh;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 5px;
+}
+ 
+button:hover {
+    background-color: white;
+    color: #8A2BE2;
+}
+
+.option {
+    background-color: #a2d2ff;
+    border: 2px solid #a2d2ff;
+}
+
+.option:hover {
+    color: #a2d2ff;
+}
+
+.button_pressed {
+    color: #a2d2ff;
+    background-color: white;
+    border: 2px solid #a2d2ff;
+}
+
+.form_column {
+    padding-right: 1vw;
+    padding-left: 1vw;
+}
+
+form textarea {
+    width: 100%;
+    box-sizing: border-box;
+}

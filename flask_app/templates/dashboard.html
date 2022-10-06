@@ -1,0 +1,61 @@
+{% extends 'home.html' %}
+{% block content %}
+
+        <div class="column column_main form_column">
+            <h1>נתונים למערכת</h1>
+            <form action="" method="POST" name="main_inputs">
+                <label for="dt">תאריך</label><br>
+                <input type="date" name="dt" id="dt" required><br>
+                <label for="introMessage">הודעה ראשונית</label><br>
+                <textarea name="introMessage" id="introMessage" cols="80" rows="2"></textarea><br>
+                <label for="awake_message">הודעה שנייה</label><br>
+                <textarea name="awake_message" id="awake_message" cols="80" rows="2"></textarea><br>
+                <label for="dadMessage">הודעה אבא</label><br>
+                <textarea name="dadMessage" id="dadMessage" cols="80" rows="2"></textarea><br>
+                <label for="momMessage">הודעה אמא</label><br>
+                <textarea name="momMessage" id="momMessage" cols="80" rows="2"></textarea><br>
+                <label for="youtubeId">סרטון יוטיוב - ID</label><br>
+                <input type="text" name="youtubeId" id="youtubeId"><br>
+                <br>
+                <button type="submit">שמירה</button>
+                <p>{{ thanks }}</p>
+                <br>
+            </form>
+            
+        </div>
+        <div class="column column_main form_column" id="left_column">
+            <div id="schedule">
+                <h1>לו"ז יומי</h1>
+                <form action="" method="POST" id="schedule_form">
+                    <input type="hidden" name="tasks_to_update" id="tasks_to_update"> <!--adding this hidden field to be able to add a name to this table-->
+                    <label for="dts">תאריך</label><br>
+                    <input type="date" name="dts" id="dts" required><br>
+                    <label for="day_of_week">יום</label><br>
+                    <input type="text" name="day_of_week" id="day_of_week" value="" disabled>
+                    <p></p>
+                    <div id="tasks">
+
+                    </div>
+                    <p>{{ thanks_schedule }}</p>
+                    <br>    
+                </form>
+            </div>
+        </div>
+    </div>
+    <template id="set_schedule">
+        <div id="insert">
+
+        </div>
+        
+        <div id="add_task_here">
+
+        </div>
+        <a href="#" id="add_task" onclick="addTask()">הוסף</a>
+        <br>
+        <button type="submit">שמירה</button>
+        <br>
+    </template>
+    <script src="/static/dashboard.js"></script>
+    {% endblock %}
+</body>
+</html>
