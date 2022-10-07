@@ -100,7 +100,7 @@ def dashboard():
             date_input = request.form.get('dt')
             format = '%Y-%m-%d'
             dt = datetime.strptime(date_input, format)
-            defaultContent = True
+            defaultContent = False
             introMessage = request.form.get('introMessage')
             awake_message = request.form.get('awake_message')
             dadMessage = request.form.get('dadMessage')

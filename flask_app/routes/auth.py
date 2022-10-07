@@ -42,7 +42,7 @@ def register():
             check_name = User.query.filter_by(name=username).first()
             if check_name == None:
                 logout_user()
-                user = User(name=username, unhashed_password=unhashed_password, admin=True)
+                user = User(name=username, unhashed_password=unhashed_password, admin=False)
                 db.session.add(user)
                 db.session.commit()
             else:
