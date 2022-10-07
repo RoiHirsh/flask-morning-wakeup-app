@@ -92,7 +92,7 @@ def dashboard():
                 Schedule.query.filter_by(dt=dt).delete()
             for i in range(len(schedule_hours)):
                 #schedule = Schedule(dt=dt,time=schedule_hours[i],task=schedule_tasks[i])
-                schedule = Schedule(weekday='wednesday',time=schedule_hours[i],task=schedule_tasks[i])
+                schedule = Schedule(weekday='thursday',time=schedule_hours[i],task=schedule_tasks[i])
                 db.session.add(schedule)
             db.session.commit()
             thanks_schedule = 'מקווים שהנתונים הועלו לדאטהבייס'
