@@ -91,7 +91,8 @@ def dashboard():
             if check_date != None:
                 Schedule.query.filter_by(dt=dt).delete()
             for i in range(len(schedule_hours)):
-                schedule = Schedule(dt=dt,time=schedule_hours[i],task=schedule_tasks[i])
+                #schedule = Schedule(dt=dt,time=schedule_hours[i],task=schedule_tasks[i])
+                schedule = Schedule(weekday='sunday',time=schedule_hours[i],task=schedule_tasks[i])
                 db.session.add(schedule)
             db.session.commit()
             thanks_schedule = 'מקווים שהנתונים הועלו לדאטהבייס'
