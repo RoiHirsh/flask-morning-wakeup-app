@@ -1,19 +1,22 @@
 {% extends 'home.html' %}
+
+<title>{% block title %}כניסה לאפליקציה{% endblock %}</title>
+
 {% block content %}
-<div class="column column_main form_column">
+<div class="column column_main form_column" style="background-color: #CFA482;">
     <h1>כניסה למערכת</h1>
     {% if current_user.is_authenticated %}
         הי {{ current_user.name }}, <a href="/logout">רוצים להתנתק?</a>
         <p></p>
     {% endif %}
+    <p>{{ error }}</p>
     <form action="{{ url_for('auth.login') }}" method="POST" name="login">
         <label for="username">שם משתמש</label><br>
-        <input type="text" name="username" id="username" autofocus><br>
+        <input type="text" name="username" id="username" required minlength="2" autofocus><br>
         <label for="password">ססמא</label><br>
-        <input type="text" name="password" id="password"><br>
+        <input type="password" name="password" required minlength="2" id="password"><br>
         <br>
-        <button type="submit">כניסה</button>
-        <p>{{ error }}</p>
+        <button type="submit" style="background-color: white; color: #BB5592;">כניסה</button>
         <p>לא פתחתם חשבון עדיין? <a href="/register">הירשמו</a></p>
         <br>
     </form>

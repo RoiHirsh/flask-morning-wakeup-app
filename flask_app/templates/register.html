@@ -1,15 +1,18 @@
 {% extends 'home.html' %}
+
+<title>{% block title %}רישום לאפליקציה{% endblock %}</title>
+
 {% block content %}
-<div class="column column_main form_column">
+<div class="column column_main form_column" style="background-color: #007998">
     <h1>רישום למערכת</h1>
+    <p>{{ error }}</p>
     <form action="{{ url_for('auth.register') }}" method="POST" name="register">
         <label for="username">שם משתמש</label><br>
-        <input type="text" name="username" id="username" autofocus><br>
+        <input type="text" name="username" id="username" required autofocus maxlength="20" minlength="2" placeholder="עד 20 תווים"><br>
         <label for="password">ססמא</label><br>
-        <input type="text" name="password" id="password"><br>
+        <input type="password" name="password" id="password" required maxlength="20" minlength="2" placeholder="עד 20 תווים"><br>
         <br>
-        <button type="submit">רישום</button>
-        <p>{{ error }}</p>
+        <button type="submit" style="background-color: white; color: #BB5592;">רישום</button>
         <p>פתחתם כבר חשבון? <a href="/login">היכנסו</a></p>
         <br>
     </form>

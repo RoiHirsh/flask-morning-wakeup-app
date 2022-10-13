@@ -10,22 +10,23 @@ main = Blueprint('main',__name__)
 # these are the steps the app walk the user through. each step should be included in this dictionary
 morning_flow_steps = {1:'startflow', 2:'shower', 3:'get_dressed', 4:'organise_bag', 5:'hair', 6:'done'}
 today = datetime.today().replace(hour=0, minute=0, second=0, microsecond=0)
-whatToDo = ['הכל','טוב','האפליקציה','פשוט','סטטאטית']
 
 @main.route('/')
 @login_required
 def home():
     def locate_input(template):
+        response = 'אין נתונים'
         the_daily_inputs = Inputs.query.filter_by(dt=today).first()
         the_default_inputs = Inputs.query.filter_by(defaultContent=True).first()
         if the_daily_inputs == None:
             if the_default_inputs != None:
-                return getattr(the_default_inputs, template)
-            else: return 'אין נתונים'
+                response = getattr(the_default_inputs, template)
         else:
             if getattr(the_daily_inputs, template) == '':
-                return getattr(the_default_inputs, template)
-            else: return getattr(the_daily_inputs, template)  
+                response = getattr(the_default_inputs, template)
+            else: 
+                response = getattr(the_daily_inputs, template)  
+        return response
               
     template_requested = request.args.get('name') # fetching the name of the template requested
     if template_requested == 'awake':
@@ -39,11 +40,12 @@ def home():
         morningSong = 'https://www.youtube.com/embed/'+youtubeId+'?'
         return morningSong
     if template_requested == 'whatToDo':
-        the_daily_schedule = Schedule.query.filter_by(dt=today).all()
-        if the_daily_schedule != None:
+        whatToDo = [['00:00','לא הוזנו נתונים'],['00:00','לא הוזנו נתונים']]
+        the_schedule = Schedule.query.filter_by(dt=today).all()
+        if the_schedule != []:
             whatToDo = []
-            for i in range(len(the_daily_schedule)):
-                task_list = [the_daily_schedule[i].time,the_daily_schedule[i].task]
+            for i in range(len(the_schedule)):
+                task_list = [the_schedule[i].time,the_schedule[i].task]
                 whatToDo.append(task_list)
         json_str = json.dumps(whatToDo, ensure_ascii=False)
         return json_str
@@ -150,4 +152,4 @@ def dashboard():
             json_str = json.dumps(json_str, ensure_ascii=False)
             return json_str
         
-        return render_template('dashboard.html') # this is the default dashboard full page layout
+    return render_template('dashboard.html') # this is the default dashboard full page layout

@@ -7,7 +7,7 @@ const scheduleTemplate = document.getElementById('set_schedule').content;
 const days = {0:"ראשון",1:"שני",2:"שלישי",3:"רביעי",4:"חמישי",5:"שישי",6:"שבת"}
 const daysEnglish = {"ראשון":"sunday","שני":"monday","שלישי":"tuesday","רביעי":"wednesday","חמישי":"thursday","שישי":"friday","שבת":"saturday"}
 
-//Handle date changes
+// handle date changes
 dateField.addEventListener('input', function () {
 	let date = new Date(dateField.value);
     // Get year, month, and day part from the date
@@ -55,7 +55,7 @@ function addFirstTasks(htmlTemplate, taskInfo) {
     const addTaskLocation = htmlTemplate.getElementById('add_task_here');
     const newDiv = document.createElement('div')
     const random = Math.random()
-    string = '<input type="text" name="hour" value="'+taskInfo[0]+'" required><input type="text" name="task_for_hour" value="'+taskInfo[1]+'" required><a href="#" id="' + random + '" onclick="deleteTask(this.id)">מחק</a><br>'
+    string = '<input type="text" maxlength="6" minlength="5" placeholder="עד 6 תווים" name="hour" value="'+taskInfo[0]+'" required><input type="text" maxlength="20" minlength="3" placeholder="עד 20 תווים" name="task_for_hour" value="'+taskInfo[1]+'" required><a href="#" id="' + random + '" onclick="deleteTask(this.id)">מחק</a><br>'
     newDiv.innerHTML = string; 
     addTaskLocation.appendChild(newDiv);
 };// end function
@@ -64,7 +64,7 @@ function addTask() {
     const addTaskLocation = document.getElementById('add_task_here');
     const newDiv = document.createElement('div')
     const random = Math.random()
-    string = '<input type="text" name="hour" value="" required><input type="text" name="task_for_hour" value="" required><a href="#" id="' + random + '" onclick="deleteTask(this.id)">מחק</a><br>'
+    string = '<input type="text" maxlength="6" minlength="5" placeholder="עד 6 תווים" name="hour" value="" required><input type="text" maxlength="20" minlength="3" placeholder="עד 20 תווים" name="task_for_hour" value="" required><a href="#" id="' + random + '" onclick="deleteTask(this.id)">מחק</a><br>'
     newDiv.innerHTML = string; 
     addTaskLocation.appendChild(newDiv);
 };// end function
