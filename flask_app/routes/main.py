@@ -8,7 +8,6 @@ from datetime import datetime
 main = Blueprint('main',__name__)
 
 # these are the steps the app walk the user through. each step should be included in this dictionary
-morning_flow_steps = {1:'startflow', 2:'shower', 3:'get_dressed', 4:'organise_bag', 5:'hair', 6:'done'}
 today = datetime.today().replace(hour=0, minute=0, second=0, microsecond=0)
 
 @main.route('/')
@@ -25,20 +24,21 @@ def home():
             if getattr(the_daily_inputs, template) == '':
                 response = getattr(the_default_inputs, template)
             else: 
-                response = getattr(the_daily_inputs, template)  
+                response = getattr(the_daily_inputs, template) 
+        if template == 'youtubeId':
+            response = 'https://www.youtube.com/embed/'+response+'?'
         return response
               
     template_requested = request.args.get('name') # fetching the name of the template requested
+
     if template_requested == 'awake':
-        return locate_input('awake_message')
-    if template_requested == 'dadMessage':
-        return locate_input('dadMessage')
-    if template_requested == 'momMessage':
-        return locate_input('momMessage')
+        template_requested = template_requested + '_message'
     if template_requested == 'morningSong':
-        youtubeId = locate_input('youtubeId') 
-        morningSong = 'https://www.youtube.com/embed/'+youtubeId+'?'
-        return morningSong
+        template_requested = 'youtubeId'
+
+    if template_requested in ['awake_message','dadMessage','momMessage','youtubeId']:
+        return locate_input(template_requested)
+
     if template_requested == 'whatToDo':
         whatToDo = [['00:00','לא הוזנו נתונים'],['00:00','לא הוזנו נתונים']]
         the_schedule = Schedule.query.filter_by(dt=today).all()
@@ -49,32 +49,12 @@ def home():
                 whatToDo.append(task_list)
         json_str = json.dumps(whatToDo, ensure_ascii=False)
         return json_str
-    if template_requested == 'ready':
-        return 'ready'
-    if template_requested == 'startflow':
-        return 'startflow'
-
-    if template_requested == 'next': # if template is 'next' then first we need to get the correct template name from the morning_flow_steps dictionary
-        current_step = int(request.args.get('currentStep')) # getting the current step number (1,2,3..) from home.js 
-        template_requested = morning_flow_steps[current_step+1] # pulling the relevant template name that matches the step number from the morning_flow_steps dictionary
-    
-        if template_requested == 'shower':
-            return 'shower'
-        if template_requested == 'get_dressed':
-            return 'get_dressed'
-        if template_requested == 'organise_bag':
-            return 'organise_bag'
-        if template_requested == 'hair':
-            return 'hair'
-        if template_requested == 'done':
-            return 'done'
 
     if template_requested != None:
         return ('', 204)
 
     introMessage = locate_input('introMessage')
     return render_template('home.html', introMessage=introMessage)
-
 
 @main.route('/dashboard', methods=['POST','GET'])
 @login_required

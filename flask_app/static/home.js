@@ -24,12 +24,13 @@ let hairTemplateCopy = document.importNode(hairTemplate, true)
 const doneTemplate = document.getElementById('done').content;
 let doneTemplateCopy = document.importNode(doneTemplate, true)
 
-
 // ajax request handler
 let lastButtonClicked = 'none';
 let template = 'none';
 let targetDiv = 'none';
 let currentStep = 0;
+
+const morning_flow_steps = {1:'startflow', 2:'shower', 3:'get_dressed', 4:'organise_bag', 5:'hair', 6:'done'}
 
 function runAjax(buttonId) {
     const tmp = buttonId.split('_');
@@ -39,15 +40,20 @@ function runAjax(buttonId) {
     if (template === 'next') {
         currentStep += 1;
     }
-    const xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            handleResponse(xhr, relevantButton, template, targetDiv, buttonId, currentStep);
-        }//end if
-    lastButtonClicked = template;
-    }//end function
-    xhr.open('GET','/?name=' + template + '&currentStep=' + currentStep + '',true);
-    xhr.send();
+    if ((['ready','startflow','next'].includes(template))) {
+        handleResponse('',relevantButton, template, targetDiv, buttonId, currentStep)
+    }
+    else {
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                handleResponse(xhr, relevantButton, template, targetDiv, buttonId, currentStep);
+            }//end if
+        lastButtonClicked = template;
+        }//end function
+        xhr.open('GET','/?name=' + template + '',true);
+        xhr.send();
+    }
 };//end function 
 
 function handleResponse(xhr, relevantButton, template, targetDiv, buttonId, currentStep) {
@@ -119,7 +125,7 @@ function handleResponse(xhr, relevantButton, template, targetDiv, buttonId, curr
             playGround.replaceChildren(startflowTemplateCopy)
         }
         if (template === 'next') {
-            let relevantStep = xhr.responseText
+            let relevantStep = morning_flow_steps[currentStep+1]
             if (relevantStep == 'shower') { 
                 playGround.replaceChildren(showerTemplateCopy)
             }
